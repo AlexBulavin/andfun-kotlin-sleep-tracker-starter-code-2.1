@@ -63,7 +63,19 @@ class SleepTrackerViewModel(
 
     val clearButtonVisible = Transformations.map(nights) {
         it?.isNotEmpty()
+
     }
+
+    private var _showSnackBarEvent = MutableLiveData<Boolean>()
+
+    val showSnackBarEvent: LiveData<Boolean>
+        get() = _showSnackBarEvent
+
+    fun doneShowingSnackbar() {
+        _showSnackBarEvent.value = false
+    }
+
+
 
     private val _navigateToSleepQuality = MutableLiveData<SleepNight>()
 
@@ -132,6 +144,7 @@ class SleepTrackerViewModel(
         uiScope.launch {
             clear()
             tonight.value = null
+            _showSnackBarEvent.value = true
         }
     }
 
